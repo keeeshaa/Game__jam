@@ -130,7 +130,8 @@ class Player1:
     def draw(self, screen):
         if self.is_moving:
             if self.walk_count == 1:
-                pygame.mixer.Sound(r'C:\Users\Admin\Desktop\pp2\main\sounds\walk.mp3').play()
+                #pygame.mixer.Sound(r'C:\Users\Admin\Desktop\pp2\main\sounds\walk.mp3').play()
+                pass
             if self.direction == 'left':
                 current_frame = types2[self.types_name]['walk_frames_left'][self.walk_count % len(types2[self.types_name]['walk_frames_left'])]
             elif self.direction == 'right':
