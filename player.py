@@ -135,7 +135,7 @@ class Player1:
             self.rain -= 1
 
     def give_timer(self):
-        self.timercounter += 5
+        self.timercounter += 10
     
     def coord(self, x, y):
         self.x = x

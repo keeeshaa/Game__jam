@@ -17,7 +17,6 @@ clock = pygame.time.Clock()
 WIDTH = 1000
 HEIGHT= 700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("The Den")
 
 font = pygame.font.SysFont("comicsans", 60)
 font_small = pygame.font.SysFont("comicsans", 20)

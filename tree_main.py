@@ -9,13 +9,15 @@ clock = pygame.time.Clock()
 WIDTH = 1000
 HEIGHT = 700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Tree")
 
 font = pygame.font.SysFont("comicsans", 60)
 font_small = pygame.font.SysFont("comicsans", 20)
 
-background = pygame.transform.scale(pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\tree.jpeg'),(WIDTH, HEIGHT))
-
+back = {
+    1 : pygame.transform.scale(pygame.image.load(r'D:\main\images\tree\tree_day2.png'), (WIDTH, HEIGHT)),
+    2 : pygame.transform.scale(pygame.image.load(r'D:\main\images\tree\tree_day1.png'), (WIDTH, HEIGHT)),
+    3 : pygame.transform.scale(pygame.image.load(r'D:\main\images\tree\tree.jpeg'), (WIDTH, HEIGHT))
+}
 atmo = pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\light.png')
 
 star = pygame.transform.scale(pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\звезда.png'),(80, 80))
@@ -72,7 +74,13 @@ def Tree(player):
                         maze(player)
 
         screen.fill((0,0,0))
-        screen.blit(background,(0, 0))
+        if player.timercounter <= 20:
+            screen.blit(back[3], (0, 0))
+        elif 20 < player.timercounter and player.timercounter <= 40:
+            screen.blit(back[2], (0, 0))
+        else: 
+            screen.blit(back[1], (0, 0)) 
+
         invisible_star_rect = pygame.Rect(30, 450, 20, 20)
         screen.blit(star, (10,425))
         #pygame.draw.rect(screen, (255,255,255), invisible_star_rect)

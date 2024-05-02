@@ -46,7 +46,7 @@ class Main():
             if not game.is_time_up():
                 self.screen.blit(game.message(),(610,550))
                 from tree_main import Tree
-                player1.maze = 30
+                player1.maze = 15
                 player1.change('star')
                 Tree(player1)
         else:
@@ -106,7 +106,7 @@ class Main():
                 pygame.mixer.Sound(r'C:\Users\Admin\Desktop\pp2\main\sounds\проигрыш.mp3').play()
                 pygame.time.delay(1000)
                 from tree_main import Tree
-                player1.maze = 30
+                player1.maze = 15
                 Tree(player1)
                 player.left_pressed = False
                 player.right_pressed = False
@@ -125,7 +125,6 @@ def maze(player):
     screen = (window_size[0] + 150, window_size[-1])
     tile_size = 30
     screen = pygame.display.set_mode(screen)
-    pygame.display.set_caption("Maze")
 
     game = Main(screen)
     game.main(window_size, tile_size, player)

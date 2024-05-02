@@ -8,10 +8,13 @@ clock = pygame.time.Clock()
 WIDTH = 1000
 HEIGHT = 700
 
-pygame.display.set_caption("Meadow")
 
 invisible_teleport= pygame.Rect(0, 450, 1, 150)
-background = pygame.transform.scale(pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\поляна1.png'),(WIDTH, HEIGHT))
+back = {
+    1 : pygame.transform.scale(pygame.image.load(r'D:\main\images\meadow\meadow_day2.png'), (WIDTH, HEIGHT)),
+    2 : pygame.transform.scale(pygame.image.load(r'D:\main\images\meadow\meadow_day1.png'), (WIDTH, HEIGHT)),
+    3 : pygame.transform.scale(pygame.image.load(r'D:\main\images\meadow\meadow.png'), (WIDTH, HEIGHT))
+}
 
 font = pygame.font.SysFont("comicsans", 60)
 font_small = pygame.font.SysFont("comicsans", 20)
@@ -40,10 +43,16 @@ def Meadow(player):
                     Main(player)
                 if event.key == pygame.K_SPACE and player.types_name == 'umbrella' and player.rain == 0:
                     from rain import Rain
-                    player.rain = 30
+                    player.rain = 15
                     Rain(player)
         screen.fill((0,0,0))
-        screen.blit(background,(0, 0))
+        if player.timercounter <= 20:
+            screen.blit(back[3], (0, 0))
+        elif 20 < player.timercounter and player.timercounter <= 40:
+            screen.blit(back[2], (0, 0))
+        else: 
+            screen.blit(back[1], (0, 0)) 
+
         screen.blit(star, (920,525))
         invisible_star_rect = pygame.Rect(950, 550, 20, 20)
         timer = font_small.render(str(player.timercounter), True, (255, 255, 255))

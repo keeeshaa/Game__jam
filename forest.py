@@ -15,13 +15,14 @@ invisible_meadow_rect = pygame.Rect(1000, 450, 1, 100)
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 700
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Game")
 
 atmo = pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\light.png')
 
-back = pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\forest.JPEG')
-back = pygame.transform.scale(back, (SCREEN_WIDTH, SCREEN_HEIGHT))
-
+back = {
+    1 : pygame.transform.scale(pygame.image.load(r'D:\main\images\forest\forest_day2.png'), (SCREEN_WIDTH, SCREEN_HEIGHT)),
+    2 : pygame.transform.scale(pygame.image.load(r'D:\main\images\forest\forest_day1.png'), (SCREEN_WIDTH, SCREEN_HEIGHT)),
+    3 : pygame.transform.scale(pygame.image.load(r'D:\main\images\forest\forest.png'), (SCREEN_WIDTH, SCREEN_HEIGHT))
+}
 enter = pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\деревосвет.png')
 enter = pygame.transform.scale(enter, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -93,7 +94,12 @@ def Main(player):
             objects.append(new_object)
 
         screen.fill((0,0,0))
-        screen.blit(back, (0, 0))
+        if player.timercounter <= 20:
+            screen.blit(back[3], (0, 0))
+        elif 20 < player.timercounter and player.timercounter <= 40:
+            screen.blit(back[2], (0, 0))
+        else: 
+            screen.blit(back[1], (0, 0)) 
 
         #player_rect = pygame.Rect(x, y, 200, 200)  # Прямоугольник для игрока
         if player.player_rect.colliderect(invisible_enter_rect):

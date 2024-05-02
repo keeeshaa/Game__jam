@@ -35,7 +35,6 @@ invisible_line_y = 550
 
 DISPLAYSURF = pygame.display.set_mode((400,600))
 DISPLAYSURF.fill(WHITE)
-pygame.display.set_caption("Save the stars")
 
 
 class drop(pygame.sprite.Sprite):
@@ -75,24 +74,25 @@ class Player(pygame.sprite.Sprite):
                   self.rect.move_ip(8, 0)
                   
 
-#Setting up Sprites        
-P1 = Player()
-D1 = drop()
-
-#Creating Sprites Groups
-enemies = pygame.sprite.Group()
-drops = pygame.sprite.Group()
-drops.add(D1)
-all_sprites = pygame.sprite.Group()
-all_sprites.add(P1)
-all_sprites.add(D1)
-
-#Adding a new User event 
-INC_SPEED = pygame.USEREVENT + 1
-pygame.time.set_timer(INC_SPEED, 2000)
 
 #Game Loop
 def Rain(player):
+    #Setting up Sprites        
+    P1 = Player()
+    D1 = drop()
+
+    #Creating Sprites Groups
+    enemies = pygame.sprite.Group()
+    drops = pygame.sprite.Group()
+    drops.add(D1)
+    all_sprites = pygame.sprite.Group()
+    all_sprites.add(P1)
+    all_sprites.add(D1)
+
+    #Adding a new User event 
+    INC_SPEED = pygame.USEREVENT + 1
+    pygame.time.set_timer(INC_SPEED, 2000)
+
     SCORE = 0
     SPEED = 7
     while True:
@@ -117,7 +117,6 @@ def Rain(player):
                 DISPLAYSURF.blit(game_over, (30, 250))
                 pygame.display.update() 
                 pygame.time.delay(1000)
-                pygame.quit()
                 from meadow import Meadow
                 Meadow(player)
         

@@ -7,8 +7,9 @@ import sys
 pygame.init()
 
 SCREEN = pygame.display.set_mode((1000, 700))
-pygame.display.set_caption("Menu")
 
+pygame.display.set_caption("Long Night")
+pygame.display.set_icon(pygame.image.load(r"D:\main\images\player.png"))
 BG = pygame.image.load(r"C:\Users\Admin\Desktop\pp2\main\images\меню.jpg")
 BG = pygame.transform.scale(BG, (1000, 700))  # Изменяем размер изображения на размер экрана
 
