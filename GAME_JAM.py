@@ -18,7 +18,6 @@ y = 440
 speed = 10
 
 # Загрузка музыки
-menu_music = pygame.mixer.Sound(r"C:\Users\Admin\Desktop\pp2\main\sounds\area12-131883.mp3")
 #game_music = pygame.mixer.Sound(r'C:\Users\Admin\Desktop\pp2\main\sounds\Magic Melody - Es the Storyteller_(bomb-music.ru).mp3')
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.SysFont("minecraft.otf", size)
@@ -29,7 +28,6 @@ def draw_text(text, font, color, surface, x, y):
     surface.blit(text_obj, text_rect)
 
 def main_menu():
-    menu_music.play(-1) 
     running = True
     while running:
         SCREEN.blit(BG, (0, 0))
@@ -54,8 +52,6 @@ def main_menu():
                 sys.exit(4)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if play_button_rect.collidepoint(MENU_MOUSE_POS):
-                    menu_music.stop()  # Остановка музыки перед запуском игры
-                    #game_music.play(-1)
                     from forest import Main
                     player = Player1(x, y, speed)
                     Main(player)

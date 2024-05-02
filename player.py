@@ -73,10 +73,12 @@ types2 = {
 }
 
 class Player1:
-    def __init__(self, x , y , speed):
+    def __init__(self, x , y , speed, screen_width = 1000, screen_height = 700):
         self.x = x
         self.y = y
         self.speed = speed
+        self.screen_width = screen_width
+        self.screen_height = screen_height
         self.check_time = 0
         self.types_name = 'static'
         self.player_rect = pygame.Rect(x, y, types2[self.types_name]['lumen'].get_width(), types2[self.types_name]['lumen'].get_height())
@@ -103,6 +105,11 @@ class Player1:
             self.direction = 'right'
         else:
             self.is_moving = False
+
+        if self.x < 0:
+            self.x = 0
+        elif self.x > self.screen_width - self.player_rect.width:
+            self.x = self.screen_width - self.player_rect.width
 
         current_time = pygame.time.get_ticks()
         if self.is_moving and current_time - self.last_update_time > self.animation_delay:
