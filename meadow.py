@@ -10,7 +10,7 @@ HEIGHT = 700
 
 pygame.display.set_caption("Meadow")
 
-invisible_teleport= pygame.Rect(10, 450, 100, 150)
+invisible_teleport= pygame.Rect(0, 450, 1, 150)
 background = pygame.transform.scale(pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\поляна1.png'),(WIDTH, HEIGHT))
 
 font = pygame.font.SysFont("comicsans", 60)
@@ -18,7 +18,7 @@ font_small = pygame.font.SysFont("comicsans", 20)
 
 star = pygame.transform.scale(pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\звезда.png'),(80, 80))
 star_dark = pygame.transform.scale(pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\звездат.png'),(80, 80))
-
+left = pygame.transform.scale(pygame.image.load(r'D:\main\images\влево.png'),(100,100))
 
 def Meadow(player):
     x = 10
@@ -34,7 +34,7 @@ def Meadow(player):
             if event.type == pygame.KEYDOWN:
                 if player.player_rect.colliderect(invisible_teleport) and  event.key == pygame.K_LEFT:
                     from forest import Main
-                    x = 600
+                    x = 920
                     y = 460
                     player.coord(x, y)
                     Main(player)
@@ -50,6 +50,9 @@ def Meadow(player):
         #pygame.draw.rect(screen, (255,255,255), invisible_star_rect)
         if player.player_rect.colliderect(invisible_star_rect):
             screen.blit(star_dark,(920, 525))
+
+        if player.player_rect.colliderect(invisible_teleport):
+            screen.blit(left, (0, 400))
         player.update()
         player.draw(screen)
         pygame.display.flip()

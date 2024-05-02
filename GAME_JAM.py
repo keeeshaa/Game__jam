@@ -12,6 +12,7 @@ pygame.display.set_caption("Menu")
 BG = pygame.image.load(r"C:\Users\Admin\Desktop\pp2\main\images\меню.jpg")
 BG = pygame.transform.scale(BG, (1000, 700))  # Изменяем размер изображения на размер экрана
 
+player_img = pygame.transform.scale(pygame.image.load(r'D:\main\images\player.png'),(160,250))
 
 x = 0
 y = 440
@@ -19,8 +20,8 @@ speed = 10
 
 # Загрузка музыки
 #game_music = pygame.mixer.Sound(r'C:\Users\Admin\Desktop\pp2\main\sounds\Magic Melody - Es the Storyteller_(bomb-music.ru).mp3')
-def get_font(size): # Returns Press-Start-2P in the desired size
-    return pygame.font.SysFont("minecraft.otf", size)
+def get_font(size): 
+    return pygame.font.SysFont("comicsans", size)
 
 def draw_text(text, font, color, surface, x, y):
     text_obj = font.render(text, True, color)
@@ -31,11 +32,11 @@ def main_menu():
     running = True
     while running:
         SCREEN.blit(BG, (0, 0))
-
+        SCREEN.blit(player_img, (850,450))
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
 
-        draw_text("LONG NIGHT", get_font(100), "#000000", SCREEN, 750, 425)
+        draw_text("LONG NIGHT", get_font(80), "#000000", SCREEN, 730, 425)
 
         # Draw buttons
         play_button_rect = pygame.Rect(700, 475, 200, 45)
@@ -43,8 +44,8 @@ def main_menu():
 
         #pygame.draw.rect(SCREEN, (215, 252, 212), play_button_rect)
 
-        draw_text("PLAY", get_font(50), (0, 0, 0), SCREEN, 800, 500)
-        draw_text("QUIT", get_font(50), (0, 0, 0), SCREEN, 800, 550)
+        draw_text("PLAY", get_font(40), (0, 0, 0), SCREEN, 800, 500)
+        draw_text("QUIT", get_font(40), (0, 0, 0), SCREEN, 800, 550)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

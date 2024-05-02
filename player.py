@@ -106,10 +106,10 @@ class Player1:
         else:
             self.is_moving = False
 
-        if self.x < 0:
-            self.x = 0
-        elif self.x > self.screen_width - self.player_rect.width:
-            self.x = self.screen_width - self.player_rect.width
+        if self.x < -60:
+            self.x = -60
+        elif self.x > self.screen_width + 30 - self.player_rect.width:
+            self.x = self.screen_width + 30 - self.player_rect.width
 
         current_time = pygame.time.get_ticks()
         if self.is_moving and current_time - self.last_update_time > self.animation_delay:
