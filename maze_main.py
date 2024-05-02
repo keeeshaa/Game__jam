@@ -31,7 +31,7 @@ class Main():
         self.screen.blit(instructions3,(613,362))
 
     # draws all configs; maze, player, instructions, and time
-    def _draw(self, maze, tile, player, game, clock):
+    def _draw(self, maze, tile, player, game, clock, player1):
         # draw maze
         [cell.draw(self.screen, tile) for cell in maze.grid_cells]
         # add a goal point to reach
@@ -46,9 +46,9 @@ class Main():
             if not game.is_time_up():
                 self.screen.blit(game.message(),(610,550))
                 from tree_main import Tree
-                player = Player1(x, y, speed)
-                player.change('star')
-                Tree(player)
+                player1.maze = 30
+                player1.change('star')
+                Tree(player1)
         else:
             clock.update_timer()
         self.screen.blit(clock.display_timer(), (625,200))
@@ -106,6 +106,7 @@ class Main():
                 pygame.mixer.Sound(r'C:\Users\Admin\Desktop\pp2\main\sounds\проигрыш.mp3').play()
                 pygame.time.delay(1000)
                 from tree_main import Tree
+                player1.maze = 30
                 Tree(player1)
                 player.left_pressed = False
                 player.right_pressed = False
@@ -113,7 +114,7 @@ class Main():
                 player.down_pressed = False
                 self.game_over = True
                 
-            self._draw(maze, tile, player, game, clock)
+            self._draw(maze, tile, player, game, clock, player1)
 
             self.FPS.tick(60)
 

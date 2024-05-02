@@ -74,6 +74,8 @@ types2 = {
 
 class Player1:
     def __init__(self, x , y , speed, screen_width = 1000, screen_height = 700):
+        self.maze = 0
+        self.rain = 0
         self.x = x
         self.y = y
         self.speed = speed
@@ -121,12 +123,17 @@ class Player1:
         if(self.check_time != int(time.time())):
             self.check_time = int(time.time())
             self.timer()
+
     def change(self, type):
         self.types_name = type
 
     def timer(self):
         self.timercounter -= 1
-    
+        if self.maze != 0:
+            self.maze -= 1
+        if self.rain != 0:
+            self.rain -= 1
+
     def give_timer(self):
         self.timercounter += 5
     

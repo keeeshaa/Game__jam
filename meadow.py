@@ -38,8 +38,9 @@ def Meadow(player):
                     y = 460
                     player.coord(x, y)
                     Main(player)
-                if event.key == pygame.K_SPACE and player.types_name == 'umbrella':
+                if event.key == pygame.K_SPACE and player.types_name == 'umbrella' and player.rain == 0:
                     from rain import Rain
+                    player.rain = 30
                     Rain(player)
         screen.fill((0,0,0))
         screen.blit(background,(0, 0))

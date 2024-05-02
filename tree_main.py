@@ -68,7 +68,7 @@ def Tree(player):
                     from forest import Main
                     Main(player)
                 if event.key == pygame.K_SPACE:
-                    if player.player_rect.colliderect(invisible_star_rect):
+                    if player.player_rect.colliderect(invisible_star_rect) and player.maze == 0:
                         maze(player)
 
         screen.fill((0,0,0))
