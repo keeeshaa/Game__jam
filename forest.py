@@ -3,6 +3,7 @@ import sys
 import random
 from maze_main import maze
 from player import *
+
 pygame.init()
 
 clock = pygame.time.Clock()
@@ -68,63 +69,68 @@ objects = []
 
 def Main(player):
     running = True
+    flag = True
     while running:
-
         for event in pygame.event.get():    
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if player.player_rect.colliderect(invisible_enter_rect):
-                if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    flag = not flag
+                if player.player_rect.colliderect(invisible_enter_rect) and flag:
                     if event.key == pygame.K_UP:
                         from tree_main import Tree
                         Tree(player)
                     if event.key == pygame.K_DOWN:
                         from den import Den
                         Den(player)
+                if player.player_rect.colliderect(invisible_meadow_rect) and flag:
+                    if event.type == pygame.KEYDOWN:    
+                        if event.key == pygame.K_RIGHT:
+                            from meadow import Meadow
+                            Meadow(player)
+        if flag == True:
+            # Generate new objects randomly
+            if random.random() < 0.012:
+                new_object = MovingImage()
+                objects.append(new_object)
+
+            screen.fill((0,0,0))
+            if player.timercounter <= 20:
+                screen.blit(back[3], (0, 0))
+            elif 20 < player.timercounter and player.timercounter <= 40:
+                screen.blit(back[2], (0, 0))
+            else: 
+                screen.blit(back[1], (0, 0)) 
+
+            #player_rect = pygame.Rect(x, y, 200, 200)  # Прямоугольник для игрока
+            if player.player_rect.colliderect(invisible_enter_rect):
+                screen.blit(enter, (0, 0))
+                screen.blit(up,(300,70))
+                screen.blit(down,(300,70))
+
             if player.player_rect.colliderect(invisible_meadow_rect):
-                if event.type == pygame.KEYDOWN:    
-                    if event.key == pygame.K_RIGHT:
-                        from meadow import Meadow
-                        Meadow(player)
+                screen.blit(right, (300,70))
+            player.update()
+            player.draw(screen)
+            #pygame.draw.rect(screen, (255,255,255), invisible_meadow_rect)
+            #pygame.draw.rect(screen, (255,255,255), invisible_enter_rect)
+            #pygame.draw.rect(screen, (215, 252, 212), up_button_rect)
+            #pygame.draw.rect(screen, (215, 252, 212), down_button_rect)
 
-        # Generate new objects randomly
-        if random.random() < 0.012:
-            new_object = MovingImage()
-            objects.append(new_object)
-
-        screen.fill((0,0,0))
-        if player.timercounter <= 20:
-            screen.blit(back[3], (0, 0))
-        elif 20 < player.timercounter and player.timercounter <= 40:
-            screen.blit(back[2], (0, 0))
+            for obj in objects:
+                obj.update()
+                obj.draw()
+            # Draw the main character on top
+            # Draw the player character
+            timer = font_small.render(str(player.timercounter), True, (255, 255, 255))
+            screen.blit(timer, (10,10))
+            pygame.display.update()
+            clock.tick(30)
         else: 
-            screen.blit(back[1], (0, 0)) 
-
-        #player_rect = pygame.Rect(x, y, 200, 200)  # Прямоугольник для игрока
-        if player.player_rect.colliderect(invisible_enter_rect):
-            screen.blit(enter, (0, 0))
-            screen.blit(up,(300,70))
-            screen.blit(down,(300,70))
-
-        if player.player_rect.colliderect(invisible_meadow_rect):
-            screen.blit(right, (300,70))
-        player.update()
-        player.draw(screen)
-        #pygame.draw.rect(screen, (255,255,255), invisible_meadow_rect)
-        #pygame.draw.rect(screen, (255,255,255), invisible_enter_rect)
-        #pygame.draw.rect(screen, (215, 252, 212), up_button_rect)
-        #pygame.draw.rect(screen, (215, 252, 212), down_button_rect)
-
-        for obj in objects:
-            obj.update()
-            obj.draw()
-        # Draw the main character on top
-        # Draw the player character
-        timer = font_small.render(str(player.timercounter), True, (255, 255, 255))
-        screen.blit(timer, (10,10))
-        pygame.display.update()
-        clock.tick(30)
+            from pause import display_pause_message
+            display_pause_message(screen, pygame.font.Font(None, 45), SCREEN_WIDTH ,SCREEN_HEIGHT)
 
 
 

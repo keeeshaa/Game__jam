@@ -89,6 +89,7 @@ class Player1:
         self.animation_delay = 100
         self.static_image = types2[self.types_name]['lumen']
         self.timercounter = 60
+        self.all_time = 0
 
     def update(self):
         self.time123()
@@ -129,6 +130,7 @@ class Player1:
 
     def timer(self):
         self.timercounter -= 1
+        self.all_time += 1
         if self.maze != 0:
             self.maze -= 1
         if self.rain != 0:

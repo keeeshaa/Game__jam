@@ -58,6 +58,7 @@ def Tree(player):
     y = 450
     player.coord(x, y)
     running = True
+    flag = True
     while running:
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -66,40 +67,43 @@ def Tree(player):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_DOWN:
+                if event.key == pygame.K_p:
+                    flag = not flag
+                if event.key == pygame.K_DOWN and flag:
                     from forest import Main
                     Main(player)
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE and flag:
                     if player.player_rect.colliderect(invisible_star_rect) and player.maze == 0:
                         maze(player)
+        if flag == True:
+            screen.fill((0,0,0))
+            if player.timercounter <= 20:
+                screen.blit(back[3], (0, 0))
+            elif 20 < player.timercounter and player.timercounter <= 40:
+                screen.blit(back[2], (0, 0))
+            else: 
+                screen.blit(back[1], (0, 0)) 
 
-        screen.fill((0,0,0))
-        if player.timercounter <= 20:
-            screen.blit(back[3], (0, 0))
-        elif 20 < player.timercounter and player.timercounter <= 40:
-            screen.blit(back[2], (0, 0))
+            invisible_star_rect = pygame.Rect(30, 450, 20, 20)
+            screen.blit(star, (10,425))
+            #pygame.draw.rect(screen, (255,255,255), invisible_star_rect)
+
+            if player.player_rect.colliderect(invisible_star_rect):
+                screen.blit(star_dark,(10, 425))
+
+            player.update()
+            player.draw(screen)
+
+            if random.random() < 0.012:
+                new_object = MovingImage()
+                objects.append(new_object)
+            for obj in objects:
+                obj.update()
+                obj.draw()
+            timer = font_small.render(str(player.timercounter), True, (255, 255, 255))
+            screen.blit(timer, (10,10))
+            pygame.display.flip()
+            clock.tick(30)
         else: 
-            screen.blit(back[1], (0, 0)) 
-
-        invisible_star_rect = pygame.Rect(30, 450, 20, 20)
-        screen.blit(star, (10,425))
-        #pygame.draw.rect(screen, (255,255,255), invisible_star_rect)
-
-        if player.player_rect.colliderect(invisible_star_rect):
-            screen.blit(star_dark,(10, 425))
-
-        player.update()
-        player.draw(screen)
-
-        if random.random() < 0.012:
-            new_object = MovingImage()
-            objects.append(new_object)
-        for obj in objects:
-            obj.update()
-            obj.draw()
-        timer = font_small.render(str(player.timercounter), True, (255, 255, 255))
-        screen.blit(timer, (10,10))
-        pygame.display.flip()
-        clock.tick(30)
-
-
+            from pause import display_pause_message
+            display_pause_message(screen, pygame.font.Font(None, 45), WIDTH ,HEIGHT)

@@ -33,9 +33,6 @@ game_win = font.render("You win!!!", True, WHITE)
 background = pygame.transform.scale(pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\background_rain.JPG'),(401, 605)) #background image
 invisible_line_y = 550
 
-DISPLAYSURF = pygame.display.set_mode((400,600))
-DISPLAYSURF.fill(WHITE)
-
 
 class drop(pygame.sprite.Sprite):
       def __init__(self):
@@ -77,6 +74,8 @@ class Player(pygame.sprite.Sprite):
 
 #Game Loop
 def Rain(player):
+    DISPLAYSURF = pygame.display.set_mode((400,600))
+    DISPLAYSURF.fill(WHITE)
     #Setting up Sprites        
     P1 = Player()
     D1 = drop()
@@ -92,50 +91,56 @@ def Rain(player):
     #Adding a new User event 
     INC_SPEED = pygame.USEREVENT + 1
     pygame.time.set_timer(INC_SPEED, 2000)
-
+    flag = True
     SCORE = 0
     SPEED = 7
     while True:
         #Cycles through all events occuring  
         for event in pygame.event.get():
-            if event.type == INC_SPEED:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    flag = not flag
+            if event.type == INC_SPEED and flag:
                   SPEED += 0.5      
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
 
-
-        DISPLAYSURF.blit(background, (0,0))
-        scores = font_small.render(str(SCORE), True, WHITE)
-        DISPLAYSURF.blit(scores, (10,10))
-        #Moves and Re-draws all Sprites
-        for entity in all_sprites:
-            entity.move()
-            DISPLAYSURF.blit(entity.image, entity.rect)
-        for entity in drops:
-            if entity.rect.bottom > invisible_line_y:
-                DISPLAYSURF.blit(game_over, (30, 250))
-                pygame.display.update() 
+        if flag == True:
+            DISPLAYSURF.blit(background, (0,0))
+            scores = font_small.render(str(SCORE), True, WHITE)
+            DISPLAYSURF.blit(scores, (10,10))
+            #Moves and Re-draws all Sprites
+            for entity in all_sprites:
+                entity.move()
+                DISPLAYSURF.blit(entity.image, entity.rect)
+            for entity in drops:
+                if entity.rect.bottom > invisible_line_y:
+                    DISPLAYSURF.blit(game_over, (30, 250))
+                    pygame.display.update() 
+                    pygame.time.delay(1000)
+                    from meadow import Meadow
+                    Meadow(player)
+            
+            if pygame.sprite.spritecollideany(P1, drops):
+                pygame.mixer.Sound(r'C:\Users\Admin\Desktop\pp2\main\sounds\voda-kaplya-odinochnyiy-korotkiy-myagkiy-blizkiy.mp3').play()
+                SCORE += 1  
+                for entity in drops:
+                        entity.respawn() 
+                pygame.display.update()
+            pygame.display.update()
+            if SCORE == 20:
+                DISPLAYSURF.blit(game_win, (30, 250))  
+                pygame.display.update()  
                 pygame.time.delay(1000)
                 from meadow import Meadow
+                x = 600
+                y = 500
+                player.change('star')
+                player.coord(x, y)
                 Meadow(player)
-        
-        if pygame.sprite.spritecollideany(P1, drops):
-              pygame.mixer.Sound(r'C:\Users\Admin\Desktop\pp2\main\sounds\voda-kaplya-odinochnyiy-korotkiy-myagkiy-blizkiy.mp3').play()
-              SCORE += 1  
-              for entity in drops:
-                    entity.respawn() 
-              pygame.display.update()
-        pygame.display.update()
-        if SCORE == 20:
-            DISPLAYSURF.blit(game_win, (30, 250))  
-            pygame.display.update()  
-            pygame.time.delay(1000)
-            from meadow import Meadow
-            x = 600
-            y = 500
-            player.change('star')
-            player.coord(x, y)
-            Meadow(player)
-    
-        FramePerSec.tick(FPS)
+
+            FramePerSec.tick(FPS)
+        else: 
+            from pause import display_pause_message
+            display_pause_message(DISPLAYSURF, pygame.font.Font(None, 45), SCREEN_WIDTH ,SCREEN_HEIGHT)
