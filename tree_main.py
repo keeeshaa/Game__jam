@@ -14,8 +14,8 @@ font = pygame.font.SysFont("comicsans", 60)
 font_small = pygame.font.SysFont("comicsans", 20)
 
 back = {
-    1 : pygame.transform.scale(pygame.image.load(r'D:\main\images\tree\tree_day2.png'), (WIDTH, HEIGHT)),
-    2 : pygame.transform.scale(pygame.image.load(r'D:\main\images\tree\tree_day1.png'), (WIDTH, HEIGHT)),
+    1 : pygame.transform.scale(pygame.image.load(r'D:\main\images\tree\tree_day2.jpeg'), (WIDTH, HEIGHT)),
+    2 : pygame.transform.scale(pygame.image.load(r'D:\main\images\tree\tree_day1.jpeg'), (WIDTH, HEIGHT)),
     3 : pygame.transform.scale(pygame.image.load(r'D:\main\images\tree\tree.jpeg'), (WIDTH, HEIGHT))
 }
 atmo = pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\light.png')
@@ -74,6 +74,8 @@ def Tree(player):
                     Main(player)
                 if event.key == pygame.K_SPACE and flag:
                     if player.player_rect.colliderect(invisible_star_rect) and player.maze == 0:
+                        player.stop_music()
+                        pygame.mixer.Sound(r'D:\main\sounds\button-124476.mp3').play()
                         maze(player)
         if flag == True:
             screen.fill((0,0,0))

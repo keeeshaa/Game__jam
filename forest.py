@@ -27,8 +27,6 @@ back = {
 enter = pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\деревосвет.png')
 enter = pygame.transform.scale(enter, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
-
-
 font = pygame.font.SysFont("comicsans", 60)
 font_small = pygame.font.SysFont("comicsans", 20)
 

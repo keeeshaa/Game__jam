@@ -90,18 +90,19 @@ def Den(player):
             #pygame.draw.rect(screen, (255,255,255), invisible_eng_rect)
             #pygame.draw.rect(screen, (255,255,255), invisible_umb_rect)
 
-            player.update()
+            
             
             timer = font_small.render(str(player.timercounter), True, (255, 255, 255))
             screen.blit(timer, (10,10))
 
-            player.draw(screen)
-            if not took_umbrella:
-                screen.blit(umb, (500, 325))
+            
             
             if player.player_rect.colliderect(invisible_eng_rect):
                 screen.blit(eng_light,(0,0))
-                
+            
+            player.draw(screen)
+            if not took_umbrella:
+                screen.blit(umb, (500, 325))
 
             if player.player_rect.colliderect(invisible_umb_rect):
                 if not took_umbrella:
@@ -109,6 +110,7 @@ def Den(player):
                     took_button_rect = pygame.Rect(750, 600, 150, 50)
                     pygame.draw.rect(screen, (255, 255, 255), took_button_rect)
                     draw_text("TAKE", get_font(30), (0, 0, 0), screen, 825, 625)
+            player.update()
             pygame.display.flip()
             clock.tick(30)
         else: 

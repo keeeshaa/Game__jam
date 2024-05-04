@@ -9,9 +9,11 @@ import time
 pygame.init()
 pygame.font.init()
 
-background = pygame.image.load(r"C:\Users\Admin\Desktop\pp2\main\images\background_maze.png")
+background = pygame.image.load(r"D:\main\images\background_maze.png")
 
 background2 = pygame.transform.scale(pygame.image.load(r'C:\Users\Admin\Desktop\pp2\main\images\back2_maze.jpg'),(800,800))
+
+
 
 class Main():
     def __init__(self, screen):
@@ -21,6 +23,7 @@ class Main():
         self.running = True
         self.game_over = False
         self.FPS = pygame.time.Clock()
+        self.music_back = pygame.mixer.Sound(r'D:\main\sounds\area12-131883.mp3').play()
 
     def instructions(self):
         instructions1 = self.font.render('Reach', True, self.message_color)
@@ -44,9 +47,11 @@ class Main():
         if self.game_over:
             clock.stop_timer()
             if not game.is_time_up():
+                self.music_back.stop()
                 self.screen.blit(game.message(),(610,550))
                 from tree_main import Tree
                 player1.maze = 15
+                success_music = pygame.mixer.Sound(r'D:\main\sounds\short-success-sound-glockenspiel-treasure-video-game-6346.mp3').play()
                 player1.change('star')
                 Tree(player1)
         else:
@@ -63,15 +68,17 @@ class Main():
         maze.generate_maze()
         clock.start_timer()
         game.start_timer()
+        
+        flag = True
         while self.running:
-            self.screen.blit(background,(0,0))
-            self.screen.blit( background2 , (603, -100, 752, 752))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
             # if keys were pressed still
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    flag = not flag
                 if not self.game_over:
                     if event.key == pygame.K_LEFT:
                         player.left_pressed = True
@@ -84,6 +91,8 @@ class Main():
                     player.check_move(tile, maze.grid_cells, maze.thickness)
             # if pressed key released
             if event.type == pygame.KEYUP:
+                if event.key == pygame.K_p:
+                    flag = not flag
                 if not self.game_over:
                     if event.key == pygame.K_LEFT:
                         player.left_pressed = False
@@ -94,15 +103,16 @@ class Main():
                     if event.key == pygame.K_DOWN:
                         player.down_pressed = False
                     player.check_move(tile, maze.grid_cells, maze.thickness)
-            if game.is_game_over(player):
+            if game.is_game_over(player) and flag:
                 self.game_over = True
                 player.left_pressed = False
                 player.right_pressed = False
                 player.up_pressed = False
                 player.down_pressed = False
             
-            if game.is_time_up():
+            if game.is_time_up() and flag:
                 clock.stop_timer()
+                self.music_back.stop()
                 pygame.mixer.Sound(r'C:\Users\Admin\Desktop\pp2\main\sounds\проигрыш.mp3').play()
                 pygame.time.delay(1000)
                 from tree_main import Tree
@@ -113,10 +123,15 @@ class Main():
                 player.up_pressed = False
                 player.down_pressed = False
                 self.game_over = True
-                
-            self._draw(maze, tile, player, game, clock, player1)
+            if flag:        
+                self.screen.blit(background,(0,0))
+                self.screen.blit( background2 , (603, -100, 752, 752))
+                self._draw(maze, tile, player, game, clock, player1)
 
-            self.FPS.tick(60)
+                self.FPS.tick(60)
+            else: 
+                from pause import display_pause_message
+                display_pause_message(self.screen, pygame.font.Font(None, 45), 602 ,602)
 
 
 

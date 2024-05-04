@@ -94,6 +94,7 @@ def Rain(player):
     flag = True
     SCORE = 0
     SPEED = 7
+    music_back = pygame.mixer.Sound(r'D:\main\sounds\area12-131883.mp3').play()
     while True:
         #Cycles through all events occuring  
         for event in pygame.event.get():
@@ -105,7 +106,6 @@ def Rain(player):
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-
         if flag == True:
             DISPLAYSURF.blit(background, (0,0))
             scores = font_small.render(str(SCORE), True, WHITE)
@@ -130,12 +130,14 @@ def Rain(player):
                 pygame.display.update()
             pygame.display.update()
             if SCORE == 20:
+                music_back.stop()
                 DISPLAYSURF.blit(game_win, (30, 250))  
                 pygame.display.update()  
                 pygame.time.delay(1000)
                 from meadow import Meadow
                 x = 600
                 y = 500
+                success_music = pygame.mixer.Sound(r'D:\main\sounds\short-success-sound-glockenspiel-treasure-video-game-6346.mp3').play()
                 player.change('star')
                 player.coord(x, y)
                 Meadow(player)

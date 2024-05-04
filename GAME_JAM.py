@@ -19,8 +19,7 @@ x = 0
 y = 440
 speed = 10
 
-# Загрузка музыки
-#game_music = pygame.mixer.Sound(r'C:\Users\Admin\Desktop\pp2\main\sounds\Magic Melody - Es the Storyteller_(bomb-music.ru).mp3')
+
 def get_font(size): 
     return pygame.font.SysFont("comicsans", size)
 

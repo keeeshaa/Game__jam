@@ -47,6 +47,8 @@ def Meadow(player):
                 if event.key == pygame.K_SPACE and player.types_name == 'umbrella' and player.rain == 0 and flag:
                     from rain import Rain
                     player.rain = 15
+                    player.stop_music()
+                    pygame.mixer.Sound(r'D:\main\sounds\button-124476.mp3').play()
                     Rain(player)
         if flag:
             screen.fill((0,0,0))

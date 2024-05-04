@@ -74,6 +74,8 @@ types2 = {
 
 class Player1:
     def __init__(self, x , y , speed, screen_width = 1000, screen_height = 700):
+        self.game_music = pygame.mixer.Sound(r'C:\Users\Admin\Desktop\pp2\main\sounds\Magic Melody - Es the Storyteller_(bomb-music.ru).mp3')
+        self.play_time = False
         self.maze = 0
         self.rain = 0
         self.x = x
@@ -92,6 +94,8 @@ class Player1:
         self.all_time = 0
 
     def update(self):
+        if self.play_time == False:
+            self.play_music()
         self.time123()
         if self.timercounter < 0:
             print("Game Over")
@@ -120,6 +124,7 @@ class Player1:
             self.last_update_time = current_time
 
         self.player_rect.update(self.x, self.y, types2[self.types_name]['lumen'].get_width(), types2[self.types_name]['lumen'].get_height())
+    
     def time123(self): 
         if(self.check_time != int(time.time())):
             self.check_time = int(time.time())
@@ -139,6 +144,14 @@ class Player1:
     def give_timer(self):
         self.timercounter += 10
     
+    def play_music(self):
+        self.game_music.play(-1)
+        self.play_time = True
+
+    def stop_music(self):
+        self.game_music.stop()
+        self.play_time = False
+        
     def coord(self, x, y):
         self.x = x
         self.y = y
